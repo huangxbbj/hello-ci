@@ -29,10 +29,8 @@ functional: $(TARGET)
 		echo "Functional test PASSED ✅"; \
 	else \
 		echo "Functional test FAILED ❌"; \
-		echo "Expected:"; \
-		printf "$$expected_output\n"; \
-		echo "Got:"; \
-		echo "$$output"; \
+		echo "Expected:"; printf "$$expected_output\n"; \
+		echo "Got:"; echo "$$output"; \
 		exit 1; \
 	fi
 
