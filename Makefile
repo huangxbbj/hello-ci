@@ -5,14 +5,16 @@ CFLAGS  := -Wall -Wextra -O2
 TARGET  := hello
 TESTBIN := test_hello
 
-SRC     := hello-ci.c
+SRC     := hello.c          # library code only, no main()
 TESTSRC := test_hello.c unity/unity.c
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
+# Build production executable
+$(TARGET): hello-ci.c
 	$(CC) $(CFLAGS) -o $@ $^
 
+# Build test executable
 $(TESTBIN): $(TESTSRC) $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
