@@ -1,4 +1,4 @@
-# Simple Makefile for C CI pipeline with unit + functional tests + dist packaging
+# Makefile for C CI pipeline with full GNU-style distcheck
 
 CC      := gcc
 CFLAGS  := -Wall -Wextra -O2
@@ -6,7 +6,8 @@ TARGET  := hello
 TESTBIN := test_hello
 DISTDIR := dist
 VERSION := 1.0.0
-DISTFILE := $(DISTDIR)/hello-$(VERSION).tar.gz
+PKGNAME := hello-$(VERSION)
+DISTFILE := $(DISTDIR)/$(PKGNAME).tar.gz
 
 SRC     := hello.c
 TESTSRC := test_hello.c unity/unity.c
@@ -38,19 +39,30 @@ functional: $(TARGET)
 		exit 1; \
 	fi
 
-# 🔹 Create a distribution tarball
+# 1️⃣ Create source distribution
 dist:
 	@echo "Creating source distribution..."
-	@mkdir -p $(DISTDIR)/hello-$(VERSION)
-	@cp -r $(SRC) $(TESTSRC) $(HEADERS) $(EXTRA) unity $(DISTDIR)/hello-$(VERSION) 2>/dev/null || true
-	@tar -czf $(DISTFILE) -C $(DISTDIR) hello-$(VERSION)
-	@echo "Distribution package created: $(DISTFILE)"
-	@ls -lh $(DISTFILE)
+	@mkdir -p $(DISTDIR)/$(PKGNAME)
+	@cp -r $(SRC) $(TESTSRC) $(HEADERS) $(EXTRA) unity $(DISTDIR)/$(PKGNAME) 2>/dev/null || true
+	@tar -czf $(DISTFILE) -C $(DISTDIR) $(PKGNAME)
+	@echo "Created: $(DISTFILE)"
 
-# 🔹 Full distribution check: build + test
-distcheck: all check functional
-	@echo "All tests passed ✅"
-	@$(MAKE) dist
+# 2️⃣ Full GNU-style distribution check
+distcheck: dist
+	@echo "Running distribution check..."
+	@TMPDIR=$$(mktemp -d); \
+	echo "Unpacking tarball in $$TMPDIR"; \
+	tar -xzf $(DISTFILE) -C $$TMPDIR; \
+	cd $$TMPDIR/$(PKGNAME) && \
+		echo "Building project..." && \
+		$(MAKE) all && \
+		echo "Running unit tests..." && \
+		$(MAKE) check && \
+		echo "Running functional tests..." && \
+		$(MAKE) functional && \
+		echo "✅ All tests passed in distribution build."; \
+	rm -rf $$TMPDIR
+	@echo "Distribution check successful ✅"
 
 clean:
 	rm -f $(TARGET) $(TESTBIN) *.o
