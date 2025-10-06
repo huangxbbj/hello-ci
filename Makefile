@@ -1,31 +1,28 @@
-# Simple Makefile for C/C++ CI Example
+# Makefile for C CI pipeline with Unity tests
 
 CC      := gcc
 CFLAGS  := -Wall -Wextra -O2
 TARGET  := hello
+TESTBIN := test_hello
 
-SRC     := $(wildcard *.c)
-OBJ     := $(SRC:.c=.o)
+SRC     := main.c
+TESTSRC := test_hello.c unity/unity.c
 
-# Default rule
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
+$(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(TESTBIN): $(TESTSRC) $(SRC)
+	$(CC) $(CFLAGS) -o $@ $^
 
-# Run tests (placeholder)
-check: $(TARGET)
-	@echo "Running tests..."
-	@./$(TARGET)
+check: $(TESTBIN)
+	@echo "Running unit tests..."
+	@./$(TESTBIN)
 
-# Clean up
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(TARGET) $(TESTBIN) *.o
 
-# Dist target for demonstration (mimics autotools)
 distcheck: all check
 	@echo "Distribution check successful."
 
