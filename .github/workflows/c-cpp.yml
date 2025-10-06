@@ -16,5 +16,7 @@ jobs:
       run: make
     - name: Run unit tests
       run: make check
+    - name: Run Functional Tests
+      run: make functional
     - name: Verify distribution
       run: make distcheck
