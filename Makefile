@@ -20,6 +20,22 @@ check: $(TESTBIN)
 	@echo "Running unit tests..."
 	@./$(TESTBIN)
 
+# Run system/functional test
+functional: $(TARGET)
+	@echo "Running functional test..."
+	@expected_output="Hello, CI/CD world!\n2 + 3 = 5\n5 - 3 = 2"
+	@output=`./$(TARGET)`; \
+	if [ "$$output" = "$$(printf "$$expected_output")" ]; then \
+		echo "Functional test PASSED ✅"; \
+	else \
+		echo "Functional test FAILED ❌"; \
+		echo "Expected:"; \
+		printf "$$expected_output\n"; \
+		echo "Got:"; \
+		echo "$$output"; \
+		exit 1; \
+	fi
+
 clean:
 	rm -f $(TARGET) $(TESTBIN) *.o
 
