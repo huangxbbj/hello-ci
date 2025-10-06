@@ -8,18 +8,13 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Generate configure script
-      run: autoreconf -i
-    - name: configure
-      run: ./configure
-    - name: make
+    - name: Build
       run: make
-    - name: make check
+    - name: Run tests
       run: make check
-    - name: make distcheck
+    - name: Verify distribution
       run: make distcheck
