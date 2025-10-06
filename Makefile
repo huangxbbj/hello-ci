@@ -1,18 +1,16 @@
-# Makefile for C CI pipeline with Unity tests
-
 CC      := gcc
 CFLAGS  := -Wall -Wextra -O2
 TARGET  := hello
 TESTBIN := test_hello
 
-SRC     := hello.c          # library code only, no main()
+SRC     := hello.c
 TESTSRC := test_hello.c unity/unity.c
 
 all: $(TARGET)
 
 # Build production executable
-$(TARGET): hello-ci.c
-	$(CC) $(CFLAGS) -o $@ $^
+$(TARGET): hello-ci.c hello.c
+	$(CC) $(CFLAGS) -o $@ hello-ci.c hello.c
 
 # Build test executable
 $(TESTBIN): $(TESTSRC) $(SRC)
