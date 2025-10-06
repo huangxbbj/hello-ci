@@ -5,7 +5,7 @@ CFLAGS  := -Wall -Wextra -O2
 TARGET  := hello
 TESTBIN := test_hello
 
-SRC     := main.c
+SRC     := hello-ci.c
 TESTSRC := test_hello.c unity/unity.c
 
 all: $(TARGET)
