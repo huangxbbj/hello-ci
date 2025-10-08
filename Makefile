@@ -37,7 +37,9 @@ check: $(TESTBIN)
 
 debug-junit:
 	@mkdir -p test-reports
-	@echo "Hello JUnit report" > test-reports/test_results.xml
+	@echo "Dummy JUnit report for debugging purposes" > test-reports/test_results.xml
+	@echo "Test 'test_add': PASSED" >> test-reports/test_results.xml
+	@echo "Test 'test_sub': FAILED (Expected 2 but got 3)" >> test-reports/test_results.xml
 	@echo "Dummy JUnit text generated at test-reports/test_results.xml"
 
 
