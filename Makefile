@@ -12,7 +12,7 @@ REPORT  := test_results.xml
 
 # Source and header files
 SRC     := main.c hello.c
-TESTSRC := test_hello.c unity/unity.c
+TESTSRC := test_hello.c unity/unity.c hello.c
 HEADERS := hello.h unity/unity.h
 EXTRA   := Makefile README.md
 
@@ -24,7 +24,7 @@ $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Build test binary
-$(TESTBIN): $(TESTSRC) $(SRC)
+$(TESTBIN): $(TESTSRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Run unit tests and save JUnit XML report
