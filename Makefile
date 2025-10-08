@@ -9,7 +9,7 @@ VERSION := 1.0.0
 PKGNAME := hello-$(VERSION)
 DISTFILE := $(DISTDIR)/$(PKGNAME).tar.gz
 
-SRC     := main.c
+SRC     := main.c hello.c
 TESTSRC := test_hello.c unity/unity.c
 HEADERS := hello.h unity/unity.h
 EXTRA   := Makefile main.c README.md
