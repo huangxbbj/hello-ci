@@ -9,14 +9,14 @@ VERSION := 1.0.0
 PKGNAME := hello-$(VERSION)
 DISTFILE := $(DISTDIR)/$(PKGNAME).tar.gz
 
-SRC     := hello.c
+SRC     := main.c
 TESTSRC := test_hello.c unity/unity.c
 HEADERS := hello.h unity/unity.h
 EXTRA   := Makefile hello-ci.c README.md
 
 all: $(TARGET)
 
-$(TARGET): hello-ci.c $(SRC)
+$(TARGET): main.c $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
 $(TESTBIN): $(TESTSRC) $(SRC)
