@@ -35,6 +35,22 @@ check: $(TESTBIN)
 	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null | sed -n '/^<?xml/,/$$/p' > test-reports/test_results.xml || true
 	@echo "JUnit test report generated at test-reports/test_results.xml"
 
+# ---------------- Debug target for GitHub Actions ----------------
+debug-junit:
+	@mkdir -p test-reports
+	@echo "Generating dummy JUnit XML for debug..."
+	@cat > test-reports/test_results.xml <<EOL
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="2" failures="1">
+  <testsuite name="test_hello" tests="2" failures="1">
+    <testcase name="test_add" time="0.001"/>
+    <testcase name="test_sub" time="0.002">
+      <failure message="Expected 2 but was 3"/>
+    </testcase>
+  </testsuite>
+</testsuites>
+EOL
+	@echo "Dummy JUnit XML generated at test-reports/test_results.xml"
 
 functional: $(TARGET)
 	@echo "Running functional test..."
@@ -78,4 +94,4 @@ clean:
 	rm -f $(TARGET) $(TESTBIN) *.o
 	rm -rf $(DISTDIR)
 
-.PHONY: all check functional dist distcheck clean
+.PHONY: all check debug-junit functional dist distcheck clean
