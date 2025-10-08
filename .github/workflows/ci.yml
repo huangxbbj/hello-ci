@@ -30,7 +30,7 @@ jobs:
       - name: Publish JUnit test results
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths: 'test-reports/test_results.xml'
+          report_paths: test-reports/test_results.xml
           include_passed: true
           fail_on_error: false
 
