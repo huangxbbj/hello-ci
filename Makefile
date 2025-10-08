@@ -31,8 +31,8 @@ $(TESTBIN): $(TESTSRC)
 check: $(TESTBIN)
 	@echo "Running unit tests..."
 	@mkdir -p test-reports
-	# Run Unity and keep only lines starting from the XML declaration
-	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null | sed -n '/^<?xml/,/$$/p' > test-reports/test_results.xml || true
+	# Capture only XML output
+	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null > test-reports/test_results.xml || true
 	@echo "JUnit test report generated at test-reports/test_results.xml"
 
 
