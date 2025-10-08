@@ -31,7 +31,7 @@ $(TESTBIN): $(TESTSRC)
 check: $(TESTBIN)
 	@echo "Running unit tests..."
 	@mkdir -p test-reports
-	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null > test-reports/test_results.xml || true
+	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) > test-reports/test_results.xml 2>/dev/null || true
 	@echo "JUnit test report generated at test-reports/test_results.xml"
 
 functional: $(TARGET)
