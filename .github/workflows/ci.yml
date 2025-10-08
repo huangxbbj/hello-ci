@@ -34,6 +34,12 @@ jobs:
           include_passed: true
           fail_on_error: false
 
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: test-reports/test_results.xml
+
       # 5️⃣ Run functional/system tests
       - name: Run functional tests
         run: make functional
