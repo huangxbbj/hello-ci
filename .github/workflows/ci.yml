@@ -26,6 +26,12 @@ jobs:
       - name: Run unit tests
         run: make check
 
+      # 5️⃣ Publish JUnit test results
+      - name: Visualize JUnit test results
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: test_results.xml
+
       # 5️⃣ Run functional/system tests
       - name: Run functional tests
         run: make functional
