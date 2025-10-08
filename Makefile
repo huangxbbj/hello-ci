@@ -36,9 +36,9 @@ check: $(TESTBIN)
 	@echo "JUnit test report generated at test-reports/test_results.xml"
 
 debug-junit:
-	@mkdir -p test-reports
-	@echo "Generating dummy JUnit XML for debug..."
-	@cat > test-reports/test_results.xml <<EOL
+<TAB>@mkdir -p test-reports
+<TAB>@echo "Generating dummy JUnit XML for debug..."
+<TAB>@cat > test-reports/test_results.xml <<EOL
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites tests="2" failures="1">
   <testsuite name="test_hello" tests="2" failures="1">
@@ -49,7 +49,8 @@ debug-junit:
   </testsuite>
 </testsuites>
 EOL
-	@echo "Dummy JUnit XML generated at test-reports/test_results.xml"
+<TAB>@echo "Dummy JUnit XML generated at test-reports/test_results.xml"
+
 
 
 functional: $(TARGET)
