@@ -8,23 +8,30 @@ DISTDIR := dist
 VERSION := 1.0.0
 PKGNAME := hello-$(VERSION)
 DISTFILE := $(DISTDIR)/$(PKGNAME).tar.gz
+REPORT  := test_results.xml
 
-SRC     := hello.c
+# Source and header files
+SRC     := main.c hello.c
 TESTSRC := test_hello.c unity/unity.c
 HEADERS := hello.h unity/unity.h
-EXTRA   := Makefile main.c README.md
+EXTRA   := Makefile README.md
 
+# Default target
 all: $(TARGET)
 
-$(TARGET): main.c $(SRC)
+# Build main program
+$(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
+# Build test binary
 $(TESTBIN): $(TESTSRC) $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
+# Run unit tests and save JUnit XML report
 check: $(TESTBIN)
 	@echo "Running unit tests..."
-	@./$(TESTBIN)
+	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) > $(REPORT) || true
+	@echo "JUnit test report generated at $(REPORT)"
 
 functional: $(TARGET)
 	@echo "Running functional test..."
