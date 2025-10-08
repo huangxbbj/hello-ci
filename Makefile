@@ -12,7 +12,7 @@ DISTFILE := $(DISTDIR)/$(PKGNAME).tar.gz
 SRC     := main.c
 TESTSRC := test_hello.c unity/unity.c
 HEADERS := hello.h unity/unity.h
-EXTRA   := Makefile hello-ci.c README.md
+EXTRA   := Makefile main.c README.md
 
 all: $(TARGET)
 
