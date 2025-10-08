@@ -26,6 +26,9 @@ jobs:
       - name: Run unit tests
         run: make check
 
+      - name: Generate dummy JUnit report
+        run: make debug-junit
+      
       # 5️⃣ Publish JUnit test results
       - name: Publish JUnit test results
         uses: mikepenz/action-junit-report@v4
