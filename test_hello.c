@@ -1,8 +1,7 @@
 #include "unity/unity.h"
 #include "stdio.h"
+#include "hello.h"   // contains prototypes for add() and sub()
 
-// Declaration of the function under test
-int add(int a, int b);
 
 void setUp(void) {}
 void tearDown(void) {}
