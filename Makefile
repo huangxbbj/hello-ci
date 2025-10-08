@@ -30,8 +30,9 @@ $(TESTBIN): $(TESTSRC)
 # Run unit tests and save JUnit XML report
 check: $(TESTBIN)
 	@echo "Running unit tests..."
-	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) > $(REPORT) || true
-	@echo "JUnit test report generated at $(REPORT)"
+	@mkdir -p test-reports
+	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null > test-reports/test_results.xml || true
+	@echo "JUnit test report generated at test-reports/test_results.xml"
 
 functional: $(TARGET)
 	@echo "Running functional test..."
