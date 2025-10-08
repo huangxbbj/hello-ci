@@ -31,8 +31,10 @@ $(TESTBIN): $(TESTSRC)
 check: $(TESTBIN)
 	@echo "Running unit tests..."
 	@mkdir -p test-reports
-	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) > test-reports/test_results.xml 2>/dev/null || true
+	# Run Unity and keep only lines starting from the XML declaration
+	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null | sed -n '/^<?xml/,/$$/p' > test-reports/test_results.xml || true
 	@echo "JUnit test report generated at test-reports/test_results.xml"
+
 
 functional: $(TARGET)
 	@echo "Running functional test..."
