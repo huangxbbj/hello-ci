@@ -28,10 +28,10 @@ jobs:
       - name: 🔍 Static Analysis (cppcheck)
         run: make lint
 
-      - name: Upload Static Analysi results
+      - name: Upload Static Analysis results
         uses: actions/upload-artifact@v4
         with:
-          name: junit-test-results
+          name: cppcheck-report
           path: reports/cppcheck-report.txt
 
       # 4️⃣ Run unit tests
