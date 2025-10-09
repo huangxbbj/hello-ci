@@ -38,6 +38,15 @@ jobs:
       - name: Run unit tests
         run: make check
 
+      - name: Run tests with coverage
+        run: make coverage-html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
       - name: Generate dummy JUnit report
         run: make debug-junit
       
