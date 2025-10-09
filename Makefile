@@ -9,6 +9,8 @@ VERSION := 1.0.0
 PKGNAME := hello-$(VERSION)
 DISTFILE := $(DISTDIR)/$(PKGNAME).tar.gz
 REPORT  := test_results.xml
+GCOVFLAGS := -fprofile-arcs -ftest-coverage
+LDFLAGS := -lgcov
 
 # Source and header files
 SRC     := main.c hello.c
@@ -26,7 +28,7 @@ $(TARGET): $(SRC)
 # Object files with coverage flags
 OBJS := test_hello.o unity/unity.o hello.o
 
-# Compile each file with coverage
+# Compile object files with coverage for test binary
 %.o: %.c
 	$(CC) $(CFLAGS) $(GCOVFLAGS) -c $< -o $@
 
