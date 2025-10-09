@@ -27,6 +27,15 @@ $(TARGET): $(SRC)
 $(TESTBIN): $(TESTSRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
+# Basic static code analysis
+lint:
+	@echo "🔍 Running cppcheck..."
+	@mkdir -p reports
+	@cppcheck --enable=all --inconclusive --error-exitcode=1 --quiet \
+		--suppress=missingIncludeSystem \
+		--output-file=reports/cppcheck-report.txt .
+	@echo "✅ cppcheck completed. Report: reports/cppcheck-report.txt"
+
 # Run unit tests and save JUnit XML report
 check: $(TESTBIN)
 	@echo "Running unit tests..."
