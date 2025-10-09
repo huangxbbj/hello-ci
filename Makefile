@@ -25,7 +25,7 @@ $(TARGET): $(SRC)
 
 # Build test binary
 $(TESTBIN): $(TESTSRC)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(GCOVFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Basic static code analysis
 lint:
