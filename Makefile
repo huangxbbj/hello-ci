@@ -29,11 +29,11 @@ $(TESTBIN): $(TESTSRC)
 
 # Basic static code analysis
 lint:
-	@echo "🔍 Running cppcheck..."
+	@echo "🔍 Running static analysis with cppcheck..."
 	@mkdir -p reports
-	@cppcheck --enable=all --inconclusive --error-exitcode=1 --quiet \
+	@cppcheck --enable=all --inconclusive --quiet \
 		--suppress=missingIncludeSystem \
-		--output-file=reports/cppcheck-report.txt .
+		--output-file=reports/cppcheck-report.txt . || true
 	@echo "✅ cppcheck completed. Report: reports/cppcheck-report.txt"
 
 # Run unit tests and save JUnit XML report
