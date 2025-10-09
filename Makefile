@@ -51,11 +51,21 @@ debug-junit:
 	@echo "Test 'test_sub': FAILED (Expected 2 but got 3)" >> test-reports/test_results.xml
 	@echo "Dummy JUnit text generated at test-reports/test_results.xml"
 
-coverage-html:
+# --- Coverage ---
+coverage: $(TESTBIN)
+	@echo "Running tests for coverage..."
+	@./$(TESTBIN)
+	@mkdir -p coverage
+	@gcov -o . $(SRC) > coverage/gcov-output.txt || true
+	@echo "Coverage data generated in coverage/gcov-output.txt"
+
+coverage-html: $(TESTBIN)
+	@echo "Running tests and generating HTML coverage..."
+	@./$(TESTBIN)
 	@mkdir -p coverage
 	@lcov --capture --directory . --output-file coverage/coverage.info
 	@genhtml coverage/coverage.info --output-directory coverage/html
-	@echo "✅ HTML coverage report generated at coverage/html/index.html"
+	@echo "HTML coverage report generated at coverage/html/index.html"
 
 functional: $(TARGET)
 	@echo "Running functional test..."
@@ -99,4 +109,4 @@ clean:
 	rm -f $(TARGET) $(TESTBIN) *.o
 	rm -rf $(DISTDIR)
 
-.PHONY: all check debug-junit functional dist distcheck clean
+.PHONY: all check debug-junit coverage coverage-html functional dist distcheck clean
