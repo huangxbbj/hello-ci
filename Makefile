@@ -51,6 +51,11 @@ debug-junit:
 	@echo "Test 'test_sub': FAILED (Expected 2 but got 3)" >> test-reports/test_results.xml
 	@echo "Dummy JUnit text generated at test-reports/test_results.xml"
 
+coverage-html:
+	@mkdir -p coverage
+	@lcov --capture --directory . --output-file coverage/coverage.info
+	@genhtml coverage/coverage.info --output-directory coverage/html
+	@echo "✅ HTML coverage report generated at coverage/html/index.html"
 
 functional: $(TARGET)
 	@echo "Running functional test..."
