@@ -1,7 +1,7 @@
 # Makefile for C CI pipeline with full GNU-style distcheck
 
 CC      := gcc
-CFLAGS  := -Wall -Wextra -O2
+CFLAGS  := -Wall -Wextra -O2 -fprofile-arcs -ftest-coverage
 TARGET  := hello
 TESTBIN := test_hello
 DISTDIR := dist
@@ -28,13 +28,9 @@ $(TARGET): $(SRC)
 # Object files with coverage flags
 OBJS := test_hello.o unity/unity.o hello.o
 
-# Compile object files with coverage for test binary
-%.o: %.c
-	$(CC) $(CFLAGS) $(GCOVFLAGS) -c $< -o $@
-
 # Build test binary
 $(TESTBIN): $(OBJS)
-	$(CC) $(CFLAGS) $(GCOVFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Basic static code analysis
 lint:
