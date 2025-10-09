@@ -27,6 +27,9 @@ $(TARGET): $(SRC)
 $(TESTBIN): $(TESTSRC)
 	$(CC) $(CFLAGS) $(GCOVFLAGS) -o $@ $^ $(LDFLAGS)
 
+%.o: %.c
+	$(CC) $(CFLAGS) $(GCOVFLAGS) -c $< -o $@
+
 # Basic static code analysis
 lint:
 	@echo "🔍 Running static analysis with cppcheck..."
