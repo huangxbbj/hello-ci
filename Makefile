@@ -23,12 +23,16 @@ all: $(TARGET)
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^
 
-# Build test binary with coverage flags
-$(TESTBIN): $(TESTSRC)
-	$(CC) $(CFLAGS) $(GCOVFLAGS) -o $@ $^ $(LDFLAGS)
+# Object files with coverage flags
+OBJS := test_hello.o unity/unity.o hello.o
 
+# Compile each file with coverage
 %.o: %.c
 	$(CC) $(CFLAGS) $(GCOVFLAGS) -c $< -o $@
+
+# Build test binary
+$(TESTBIN): $(OBJS)
+	$(CC) $(CFLAGS) $(GCOVFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Basic static code analysis
 lint:
@@ -54,21 +58,21 @@ debug-junit:
 	@echo "Test 'test_sub': FAILED (Expected 2 but got 3)" >> test-reports/test_results.xml
 	@echo "Dummy JUnit text generated at test-reports/test_results.xml"
 
-# Coverage text report
+# Run tests and generate coverage text
 coverage: $(TESTBIN)
 	@echo "Running tests for coverage..."
-	@./$(TESTBIN)  # generate .gcda files
+	@./$(TESTBIN)      # generates .gcda files
 	@mkdir -p coverage
-	@gcov -o . $(SRC) > coverage/gcov-output.txt || true
-	@echo "Coverage data generated in coverage/gcov-output.txt"
+	@gcov -o . hello.c > coverage/gcov-output.txt || true
+	@echo "Coverage data saved to coverage/gcov-output.txt"
 
-# HTML coverage report
+# Generate HTML coverage report
 coverage-html: $(TESTBIN)
 	@echo "Running tests and generating HTML coverage..."
-	@./$(TESTBIN)  # must run tests to produce .gcda
+	@./$(TESTBIN)
 	@mkdir -p coverage
 	@lcov --capture --directory . --output-file coverage/coverage.info --ignore-errors empty
-	@genhtml coverage/coverage.info --output-directory coverage/html
+	@genhtml coverage/coverage.info --output-directory coverage/html --ignore-errors empty
 	@echo "HTML coverage report generated at coverage/html/index.html"
 
 functional: $(TARGET)
