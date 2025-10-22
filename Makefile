@@ -41,11 +41,6 @@ lint:
 		--output-file=reports/cppcheck-report.txt . || true
 	@echo "✅ cppcheck completed. Report: reports/cppcheck-report.txt"
 
-
-memcheck: $(TESTBIN)
-	@echo "🧠 Running memory leak check with valgrind..."
-	@valgrind --leak-check=full --error-exitcode=1 ./$(TESTBIN)
-
 # Run unit tests and save JUnit XML report
 check: $(TESTBIN)
 	@echo "Running unit tests..."
@@ -53,6 +48,10 @@ check: $(TESTBIN)
 	# Run Unity and keep only lines starting from the XML declaration
 	@UNITY_OUTPUT_FORMAT=JUnit ./$(TESTBIN) 2>/dev/null | sed -n '/^<?xml/,/$$/p' > test-reports/test_results.xml || true
 	@echo "JUnit test report generated at test-reports/test_results.xml"
+
+memcheck: $(TESTBIN)
+	@echo "🧠 Running memory leak check with valgrind..."
+	@valgrind --leak-check=full --error-exitcode=1 ./$(TESTBIN)
 
 debug-junit:
 	@mkdir -p test-reports
