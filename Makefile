@@ -41,6 +41,11 @@ lint:
 		--output-file=reports/cppcheck-report.txt . || true
 	@echo "✅ cppcheck completed. Report: reports/cppcheck-report.txt"
 
+
+memcheck: $(TESTBIN)
+	@echo "🧠 Running memory leak check with valgrind..."
+	@valgrind --leak-check=full --error-exitcode=1 ./$(TESTBIN)
+
 # Run unit tests and save JUnit XML report
 check: $(TESTBIN)
 	@echo "Running unit tests..."
