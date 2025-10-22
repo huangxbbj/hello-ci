@@ -41,6 +41,9 @@ jobs:
       - name: Run unit tests
         run: make check
 
+      - make memcheck
+        run: make memcheck
+
       - name: Run tests with coverage
         run: make coverage-html
 
