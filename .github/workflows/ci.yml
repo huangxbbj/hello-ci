@@ -34,16 +34,6 @@ jobs:
       - name: Build project
         run: make all
 
-      - name: Create version tag
-        run: |
-          VERSION="v$(date +%Y.%m.%d.%H%M)"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag $VERSION
-          git push origin $VERSION
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
       - name: 🔍 Static Analysis (cppcheck)
         run: make lint
 
@@ -118,8 +108,6 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.VERSION }}
-          files: dist/hello-*.tar.gz
+          files: dist/**
           generate_release_notes: true
-    
 
