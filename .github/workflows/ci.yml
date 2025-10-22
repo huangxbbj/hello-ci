@@ -2,8 +2,11 @@ name: C CI/CD Pipeline
 
 on:
   push:
+    branches: [ main ]
+    tags:
+      - 'v*'       # Trigger CD on version tags like v1.0.0
   pull_request:
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
   build:
