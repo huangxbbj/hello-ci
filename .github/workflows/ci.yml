@@ -34,6 +34,12 @@ jobs:
       - name: Build project
         run: make all
 
+      - name: Create Git tag
+        run: |
+          VERSION="v$(date +%Y.%m.%d.%H%M)"
+          git tag $VERSION
+          git push origin $VERSION
+
       - name: 🔍 Static Analysis (cppcheck)
         run: make lint
 
