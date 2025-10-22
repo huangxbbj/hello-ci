@@ -34,12 +34,6 @@ jobs:
       - name: Build project
         run: make all
 
-      - name: Create Git tag
-        run: |
-          VERSION="v$(date +%Y.%m.%d.%H%M)"
-          git tag $VERSION
-          git push origin $VERSION
-
       - name: 🔍 Static Analysis (cppcheck)
         run: make lint
 
@@ -111,9 +105,3 @@ jobs:
           name: hello-dist
           path: dist
 
-      - name: 🚀 Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
